@@ -50,6 +50,9 @@ def video_feed():
 @app.route('/video_feed1')
 def video_feed1():
     return Response(cameras1.generate_frames1(), mimetype='multipart/x-mixed-replace; boundary=frame')
+@app.route('/video_feed2')
+def video_feed2():
+    return Response(cameras1.generate_frames2(), mimetype='multipart/x-mixed-replace; boundary=frame')
 # @app.route('/take_photo')
 # def takePhoto():
 #     return Response(take_photo(), mimetype='multipart/x-mixed-replace; boundary=frame')

@@ -6,53 +6,97 @@
     <title>Flask Frontend</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <style>
-      /* Styling for the h1 to match dark mode */
-      h2 {
-          color: white; /* Matches the navbar-dark text color */
-          background-color: #343a40; /* Matches the bg-dark background color */
-          padding: 10px;
-          border-radius: 5px; /* Optional for rounded corners */
-          margin: 0; /* Adjust margin to align with the navbar */
-      }
+        /* Navbar and h2 styling */
+        h2 {
+            color: white;
+            background-color: #343a40;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 0;
+        }
 
-      /* Styling for the message container */
-      .message-container {
-          background-color: #f8f9fa;
-          border: 1px solid #dee2e6;
-          border-radius: 5px;
-          padding: 10px;
-          margin-bottom: 10px;
-      }
-  </style>
+        /* Message container styling */
+        .message-container {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        /* Camera box styling */
+        .camera-box {
+            width: 100%; /* Fit the column */
+            max-width: 500px; /* Set max width for the image */
+            height: 300px; /* Set a fixed height */
+            object-fit: cover; /* Ensure the image scales correctly */
+            border: 2px solid #ccc; /* Optional border for better visuals */
+            border-radius: 10px; /* Optional rounded corners */
+        }
+
+        /* Row and column layout */
+        .row.gtr-uniform {
+            display: flex;
+            justify-content: space-evenly; /* Space columns evenly */
+            gap: 2%; /* Adjust spacing between columns */
+        }
+
+        .col-4 {
+            flex: 1;
+            max-width: 300px; /* Limit column width */
+            text-align: center; /* Center-align column content */
+        }
+    </style>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <h2>Bilbo Flight Server</h2>
         <p class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav">
-            <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('home') }}">Home</a>
-            </li>
-            <li class="nav-item active">
-              <a class="nav-link" href="{{ url_for('cameras') }}">Camera Stream</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{{url_for('about')}}">About</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link disabled" href="#">Disabled</a>
-            </li>
-          </ul>
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('home') }}">Home</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ url_for('cameras') }}">Camera Stream</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('about') }}">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#">Disabled</a>
+                </li>
+            </ul>
         </p>
-      </nav>
-      <h3>Video Stream</h3>
-      <div class="box alt">
-        <div class="row gtr-uniform">
-          <div class="col-4"><span class="image fit"><img src="{{ url_for('video_feed') }}" alt="Video Stream">
-          </span></div>
-          <div class="col-4"><span class="image fit"><img src="{{ url_for('video_feed1') }}" alt="Video Stream"></span></div>
+    </nav>
+    <div style="margin: 2%;">
+        <h3 style="padding-bottom: 2rem;">Camera Stream</h3>
+        <div class="box alt">
+            <div class="row gtr-uniform">
+                <!-- Camera 1 -->
+                <div class="col-4">
+                    <span class="image fit">
+                        <img src="{{ url_for('video_feed') }}" alt="Camera 1 Stream" class="camera-box">
+                    </span>
+                    <span>"Camera 1"</span>
+                </div>
+                <!-- Camera 2 -->
+                <div class="col-4">
+                    <span class="image fit">
+                        <img src="{{ url_for('video_feed1') }}" alt="Camera 2 Stream" class="camera-box">
+                    </span>
+                    <span>"Camera 2"</span>
+                </div>
+                <!-- Camera 2 -->
+                <div class="col-4">
+                  <span class="image fit">
+                      <img src="{{ url_for('video_feed2') }}" alt="Camera 3 Stream" class="camera-box">
+                  </span>
+                  <span>"Camera 3"</span>
+              </div>
+            </div>
         </div>
-      </div>
+    </div>
+
     <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>

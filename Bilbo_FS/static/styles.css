@@ -137,31 +137,26 @@ ul.actions {
 
 			}
 
-/* Row */
-
-.row {
-    display: flex;
-    flex-wrap: wrap;
-    box-sizing: border-box;
-    align-items: stretch;
+/* Set the box dimensions */
+.camera-box {
+    width: 100%; /* Ensure it fits the container */
+    max-width: 300px; /* Set maximum width for the image */
+    height: 200px; /* Fixed height for the image */
+    object-fit: cover; /* Ensures the image fills the box without distortion */
+    border: 2px solid #ccc; /* Optional: Add a border for better visual separation */
+    border-radius: 10px; /* Optional: Add rounded corners */
 }
-    .row > .col-4 {
-        width: 33.33333%;
-    }
 
-    		.row {
-			margin-top: 0;
-			margin-left: -2em;
-		}
+/* Row spacing */
+.row.gtr-uniform {
+    display: flex;
+    justify-content: center;
+    gap: 2%; /* Adjust spacing between the columns */
+}
 
-			.row > * {
-				padding: 0 0 0 2em;
-			}
-
-			.row.gtr-uniform {
-				margin-top: -2em;
-			}
-
-				.row.gtr-uniform > * {
-					padding-top: 2em;
-				}
+/* Column dimensions */
+.col-4 {
+    flex: 1; /* Make columns flexible */
+    max-width: 300px; /* Ensure columns don't exceed the maximum box size */
+    text-align: center; /* Center-align content in each column */
+}
