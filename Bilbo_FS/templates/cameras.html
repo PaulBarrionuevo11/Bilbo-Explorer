@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flask Frontend</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+      /* Styling for the h1 to match dark mode */
+      h1 {
+          color: white; /* Matches the navbar-dark text color */
+          background-color: #343a40; /* Matches the bg-dark background color */
+          padding: 10px;
+          border-radius: 5px; /* Optional for rounded corners */
+          margin: 0; /* Adjust margin to align with the navbar */
+      }
+
+      /* Styling for the message container */
+      .message-container {
+          background-color: #f8f9fa;
+          border: 1px solid #dee2e6;
+          border-radius: 5px;
+          padding: 10px;
+          margin-bottom: 10px;
+      }
+  </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <h1>Cape Station</h1>
+        <p class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('home') }}">Home</a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="{{ url_for('cameras') }}">Camera Stream</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{url_for('about')}}">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link disabled" href="#">Disabled</a>
+            </li>
+          </ul>
+        </p>
+      </nav>
+    <p>Confirm the number of cameras connected</p>
+    <center><button id="startButton" onclick="startCameras()">Start Video</button></center>
+    <button id="runScriptBtn">Run Script</button>
+    <script>
+        document.getElementById('runScriptBtn').addEventListener('click', () => {
+            fetch('/run_script')
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data.message || data.error);
+                    alert(data.message || data.error);
+                })
+                .catch(error => console.error('Error:', error));
+        });
+    </script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

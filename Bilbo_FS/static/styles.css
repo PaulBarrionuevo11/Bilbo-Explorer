@@ -1,0 +1,43 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 50px;
+}
+h1 {
+    color: #4CAF50;
+}
+button {
+    padding: 10px 20px;
+    background-color: #008CBA;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+button:hover {
+    background-color: #005f73;
+}
+
+#videoBox {
+    margin-top: 20px;
+    border: 2px solid #000; /* Black border for better visibility */
+    width: 320px; /* Adjust the width of the video box */
+    height: 240px; /* Adjust the height of the video box */
+    overflow: hidden;
+    display: inline-block;
+    background-color: #f0f0f0; /* Light gray background for aesthetics */
+}
+
+.read-text-margin
+{
+    margin-left: 15px;
+}
+
+/* Styling for the message container */
+.message-container {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
