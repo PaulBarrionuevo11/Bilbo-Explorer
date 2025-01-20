@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <style>
       /* Styling for the h1 to match dark mode */
-      h1 {
+      h2 {
           color: white; /* Matches the navbar-dark text color */
           background-color: #343a40; /* Matches the bg-dark background color */
           padding: 10px;
@@ -27,7 +27,7 @@
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <h1>Cape Station</h1>
+        <h2>Bilbo Server</h2>
         <p class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav">
             <li class="nav-item active">
@@ -47,24 +47,34 @@
       </nav>
 
     <!-- Message Container -->
-    <div style="margin: 2%;" class="message-container">
+    <div style="margin: 2%;">
       <!-- <p id="instructions">{{ instructions }}</p>
       <p id="currentNetwork">Current Network: <span id="networkName">{{ current_network }}</span></p> -->
       <!-- Operating System and other details -->
-      <h6 class="card-title">Operating System:</h6>
-      <p class="card-text">{{ os_name }}</p>
-      
-      <h6 class="card-title">Current Directory:</h6>
-      <p class="card-text">{{ current_dir }}</p>
-      
-      <h6 class="card-title">Hostname:</h6>
-      <p class="card-text">{{ hostname }}</p>
-      
-      <h6 class="card-title">Serial Connection Status:</h6>
-      <p class="card-text">{{ serial_status }}</p>
 
+      <div class="table-wrapper">
+        <table class="alt">
+          <tbody>
+            <tr>
+              <th>Operating System: </th>
+              <td>{{ os_name }}</td>
+            </tr>            
+            <tr>
+              <th>Current Directory: </th>
+              <td>{{ current_dir }}</td>
+            </tr>
+            <tr>
+              <th>Hostname: </th>
+              <td>{{ hostname }}</td>
+            </tr>
+            <tr>
+              <th>Serial Status: </th>
+              <td>{{ serial_status }}</td>
+            </tr>
+          </tbody>
+        </table>
 
-
+      </div>
     </div>
 
     <script src="{{ url_for('static', filename='script.js') }}"></script>

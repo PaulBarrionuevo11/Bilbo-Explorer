@@ -1,5 +1,13 @@
-from pyCamera import MarsCamera
+import cv2
 
-camera1 = MarsCamera()
+webCam = cv2.VideoCapture(0)
 
-camera1.generate_frames_cameras()
+while True:
+    ret, frame = webCam.read()
+
+    cv2.imshow('WebCam', frame)
+    if cv2.waitKey(1) == ord('q'):
+        break
+
+webCam.release()
+cv2.destroyAllWindows()

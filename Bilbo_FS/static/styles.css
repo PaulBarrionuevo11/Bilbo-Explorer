@@ -41,3 +41,16 @@ button:hover {
     padding: 10px;
     margin-bottom: 10px;
 }
+
+ul.actions {
+    display: -ms-flex;
+    display: -webkit-flex;
+    display: -ms-flex;
+    display: flex;
+    cursor: default;
+    list-style: none;
+    margin-left: -1rem;
+    padding-left: 0;
+}
+
+

@@ -3,52 +3,38 @@ import serial
 
 class Vehicle:
 
-    # Initializing parameters
-    def __init__(self, hostname, port='/dev/ttyUSB0', baudrate=9600):
+    # Initialize parameters
+    def __init__(self, hostname):
         self.hostname = hostname
-        self.port = port
-        self.baudrate = baudrate
-        self.connection = None
-
 
     ## VEHICLE DATA
     # Get operating system
     def get_os(self):
         os_name = os.name
-        print("Operating system: ", os_name)
-
-        if(os_name == "nt"):
-            os_name = "Windows" 
+        if os_name == "nt":
+            os_name = "Windows"
         else:
             os_name = "Other"
-
-        print("Operating system: ", os_name)
+        print("Operating system:", os_name)
         return os_name
-    
+
     # Get current working directory
     def get_path_dir(self):
         current_dir = os.getcwd()
-        print("Current dir:", current_dir)
+        print("Current directory:", current_dir)
         return current_dir
-    
-    def get_hostname(self):
-        self.hostname = "Mars 1" 
-        return self.hostname
-    
-    ## SERIAL CONNECTION
-    # Confirm serial connection
-    def confirm_serial_connection(self):
-        try:
-            self.connection = serial.Serial(self.port, self.baudrate, timeout=1)
-            if self.connection.is_open:
-                print(f"Serial connection established on {self.port} at {self.baudrate} baud.")
-                return True
-        except serial.SerialException as e:
-            print(f"Serial connection error: {e}")
-        return False
 
-    # Close serial connection
-    def close_connection(self):
-        if self.connection and self.connection.is_open:
-            self.connection.close()
-            print("Serial connection closed.")
+    # Get hostname
+    def get_hostname(self):
+        return self.hostname
+
+    ## SERIAL CONNECTION
+    # Confirm serial connection Open port at “9600,8,N,1”, no timeout:
+    def check_USB_connection(self, port='/dev/ttyUSB0', baudrate=9600, timeout=None):
+        try:
+            ser = serial.Serial(port, baudrate=baudrate, timeout=timeout)
+            print(f"Connected to serial port: {ser.name}")
+            return ser.name
+        except serial.SerialException as e:
+            print(f"Error: Could not open serial port {port}. {e}")
+            return None

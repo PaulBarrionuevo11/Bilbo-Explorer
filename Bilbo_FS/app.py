@@ -19,8 +19,7 @@ def home():
     hostname = vehicle.get_hostname()
     
     # Check serial connection
-    serial_status = "Connected" if vehicle.confirm_serial_connection() else "Disconnected"
-    vehicle.close_connection()
+    serial_status = "Connected" if vehicle.check_USB_connection() else "Disconnected"
 
     # Pass data to the frontend
     return render_template(
