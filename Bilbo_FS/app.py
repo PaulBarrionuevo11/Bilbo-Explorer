@@ -34,20 +34,22 @@ def home():
 def cameras():
     return render_template("cameras.html", cameras1=cameras1)
 
-@app.route('/run_script', methods=['GET'])
-def run_script():
-    try:
-        # Replace with the correct path to your script
-        script_path = r"C:\Users\pable\OneDrive\Escritorio\myAI\capeStation\opencv_camera.py"
-        result = subprocess.run(['python', script_path], capture_output=True, text=True)
-        return jsonify({'message': 'Script executed successfully', 'output': result.stdout})
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
+# @app.route('/run_script', methods=['GET'])
+# def run_script():
+#     try:
+#         # Replace with the correct path to your script
+#         script_path = r"C:\Users\pable\OneDrive\Escritorio\myAI\capeStation\opencv_camera.py"
+#         result = subprocess.run(['python', script_path], capture_output=True, text=True)
+#         return jsonify({'message': 'Script executed successfully', 'output': result.stdout})
+#     except Exception as e:
+#         return jsonify({'error': str(e)}), 500
 
-# @app.route('/video_feed')
-# def videoFeed():
-#     return Response(vehicle1.generate_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
-
+@app.route('/video_feed')
+def video_feed():
+    return Response(cameras1.generate_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
+@app.route('/video_feed1')
+def video_feed1():
+    return Response(cameras1.generate_frames1(), mimetype='multipart/x-mixed-replace; boundary=frame')
 # @app.route('/take_photo')
 # def takePhoto():
 #     return Response(take_photo(), mimetype='multipart/x-mixed-replace; boundary=frame')
