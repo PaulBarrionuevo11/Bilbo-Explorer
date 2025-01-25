@@ -144,7 +144,7 @@ ul.actions {
     height: 200px; /* Fixed height for the image */
     object-fit: cover; /* Ensures the image fills the box without distortion */
     border: 2px solid #ccc; /* Optional: Add a border for better visual separation */
-    border-radius: 10px; /* Optional: Add rounded corners */
+    border-radius: 10px; /* Optional: Add rounded corners hh */
 }
 
 /* Row spacing */
@@ -159,4 +159,12 @@ ul.actions {
     flex: 1; /* Make columns flexible */
     max-width: 300px; /* Ensure columns don't exceed the maximum box size */
     text-align: center; /* Center-align content in each column */
+}
+
+.alt tr {
+    padding: 5px 0; /* This won't work as expected */
+}
+
+.alt td, .alt th {
+    padding: 5px 0; /* This is the effective way */
 }

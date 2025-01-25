@@ -8,8 +8,8 @@
     <style>
       /* Styling for the h1 to match dark mode */
       h2 {
-          color: white; /* Matches the navbar-dark text color */
-          background-color: #343a40; /* Matches the bg-dark background color */
+          color: rgb(6, 6, 6); /* Matches the navbar-dark text color */
+          background-color: #343a4000; /* Matches the bg-dark background color */
           padding: 10px;
           border-radius: 5px; /* Optional for rounded corners */
           margin: 0; /* Adjust margin to align with the navbar */
@@ -26,7 +26,7 @@
   </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <h2>Bilbo Flight Server</h2>
         <p class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav">
@@ -47,12 +47,17 @@
       </nav>
 
     <!-- Message Container -->
-    <div style="margin: 2%;">
+    <div style="margin: 2%; padding-top: 7px;">
       <!-- <p id="instructions">{{ instructions }}</p>
       <p id="currentNetwork">Current Network: <span id="networkName">{{ current_network }}</span></p> -->
       <!-- Operating System and other details -->
 
       <div class="table-wrapper">
+        <style>
+          .alt td, .alt th {
+              padding: 5px 0;
+          }
+        </style>
         <table class="alt">
           <tbody>
             <tr>
@@ -73,7 +78,34 @@
             </tr>
           </tbody>
         </table>
+      </div>
+      <div style="padding-top: 30px;">
+        <h5>Sensor Data</h5>
+        <div>
+          <p>IMU Acceleration: <span id="imuAccel"></span></p>
+          <p>IMU Gyro: <span id="imuGyro"></span></p>
+          <p>Extra Acceleration: <span id="extraAccel"></span></p>
+          <p>Distance from ground: <span id="ultrasound"></span></p>
+        </div>
 
+        <script>
+            function getSensorData() {
+                fetch('/get_sensor_data')
+                    .then(response => response.json())
+                    .then(data => {
+                        if (!data.error) {
+                            document.getElementById('imuAccel').innerText = `IMU Accel: ${data.imu_accel.join(', ')}`;
+                            document.getElementById('imuGyro').innerText = `IMU Gyro: ${data.imu_gyro.join(', ')}`;
+                            document.getElementById('extraAccel').innerText = `Extra Accel: ${data.extra_accel.join(', ')}`;
+                            document.getElementById('ultrasound').innerText = `Ultrasound: ${data.ultrasonic.join(', ')}`;
+                        } else {
+                            document.getElementById('imuAccel').innerText = data.error;
+                        }
+                    });
+            }
+
+            setInterval(getSensorData, 1000); // Call every second
+        </script>
       </div>
     </div>
 

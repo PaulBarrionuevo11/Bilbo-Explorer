@@ -1,12 +1,13 @@
 #from videoStream import generate_frames
 from flask import Flask, Response, render_template, jsonify
 from vehicle import Vehicle
-from pyCamera import MarsCamera
-import subprocess
+from navigationCamera import MarsCamera
+from ESP32FlightController import ESP32FlightContoller
 
 app = Flask(__name__)
 
 cameras1 = MarsCamera()
+flightController = ESP32FlightContoller()
 
 # Initialize the Vehicle object
 vehicle = Vehicle(hostname="Mars Rover")
@@ -34,16 +35,7 @@ def home():
 def cameras():
     return render_template("cameras.html", cameras1=cameras1)
 
-# @app.route('/run_script', methods=['GET'])
-# def run_script():
-#     try:
-#         # Replace with the correct path to your script
-#         script_path = r"C:\Users\pable\OneDrive\Escritorio\myAI\capeStation\opencv_camera.py"
-#         result = subprocess.run(['python', script_path], capture_output=True, text=True)
-#         return jsonify({'message': 'Script executed successfully', 'output': result.stdout})
-#     except Exception as e:
-#         return jsonify({'error': str(e)}), 500
-
+# Navigation Camera stream
 @app.route('/video_feed')
 def video_feed():
     return Response(cameras1.generate_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
@@ -53,10 +45,25 @@ def video_feed1():
 @app.route('/video_feed2')
 def video_feed2():
     return Response(cameras1.generate_frames2(), mimetype='multipart/x-mixed-replace; boundary=frame')
-# @app.route('/take_photo')
-# def takePhoto():
-#     return Response(take_photo(), mimetype='multipart/x-mixed-replace; boundary=frame')
+##
 
+@app.route('/get_sensor_data')
+def get_sensor_data():
+    data = flightController.getData()
+    if data is None or data == 0: # No serial connection or no data
+        return jsonify({"error": "No Serial Connection Establsihed"})
+
+    elif data:
+        return jsonify({
+            "imu_accel": data[:3],
+            "imu_gyro": data[3:6],
+            "extra_accel": data[6:9],
+            "ultrasonic": data[9],
+        })
+    # If you want to handle other cases explicitly:
+    else:
+        return jsonify({"error": "Unexpected data format"})
+    
 @app.route('/about')
 def about():
     return render_template("about.html")
