@@ -15,15 +15,6 @@
             margin: 0;
         }
 
-        /* Message container styling */
-        .message-container {
-            background-color: #f8f9fa;
-            border: 1px solid #dee2e6;
-            border-radius: 5px;
-            padding: 10px;
-            margin-bottom: 10px;
-        }
-
         /* Camera box styling */
         .camera-box {
             width: 100%; /* Fit the column */
@@ -75,21 +66,21 @@
                 <!-- Camera 1 -->
                 <div class="col-4">
                     <span class="image fit">
-                        <img src="{{ url_for('video_feed') }}" alt="Camera 1 Stream" class="camera-box">
+                        <img src="{{ url_for('camera1') }}" alt="Camera 1 Stream" class="camera-box">
                     </span>
                     <span>"Camera 1"</span>
                 </div>
                 <!-- Camera 2 -->
                 <div class="col-4">
                     <span class="image fit">
-                        <img src="{{ url_for('video_feed1') }}" alt="Camera 2 Stream" class="camera-box">
+                        <img src="{{ url_for('camera2') }}" alt="Camera 2 Stream" class="camera-box">
                     </span>
                     <span>"Camera 2"</span>
                 </div>
                 <!-- Camera 2 -->
                 <div class="col-4">
                   <span class="image fit">
-                      <img src="{{ url_for('video_feed2') }}" alt="Camera 3 Stream" class="camera-box">
+                      <img src="{{ url_for('camera3') }}" alt="Camera 3 Stream" class="camera-box">
                   </span>
                   <span>"Camera 3"</span>
               </div>
