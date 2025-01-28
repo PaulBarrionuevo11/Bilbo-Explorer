@@ -1,5 +1,5 @@
 /*
- * Integration of multiple sensor that controls Bilbo
+ * Bilbo's integration with multiple sensors to navigate the environment
  * Author: Paul Barrionuevo
  * Description: Interaction of sensors to calibrate and position a flying vehicle
  * with the intention to replace a Flight Control System / Flight Controller
