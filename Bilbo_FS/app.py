@@ -5,9 +5,11 @@ from ESP32FlightController import ESP32FlightContoller
 
 app = Flask(__name__)
 
-cameras = MarsCamera()
+cameras1 = MarsCamera()
 flightController = ESP32FlightContoller()
-vehicle = Vehicle(hostname="Bilbo Flying Rover") # Initialize the Vehicle object
+
+# Initialize the Vehicle object
+vehicle = Vehicle(hostname="Mars Rover")
 
 @app.route("/")
 def home():
@@ -15,7 +17,8 @@ def home():
     os_name = vehicle.get_os()
     current_dir = vehicle.get_path_dir()
     hostname = vehicle.get_hostname()
-
+    
+    # Check serial connection
     # serial_status = "Connected" if vehicle.check_USB_connection() else "Disconnected"
 
     # Pass data to the frontend
@@ -29,18 +32,18 @@ def home():
 
 @app.route('/cameras')
 def cameras():
-    return render_template("cameras.html", cameras=cameras)
+    return render_template("cameras.html", cameras1=cameras1)
 
-## Navigation Camera stream
-@app.route('/cam_1')
-def camera1():
-    return Response(cameras.generate_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
-@app.route('/cam_2')
-def camera2():
-    return Response(cameras.generate_frames1(), mimetype='multipart/x-mixed-replace; boundary=frame')
-@app.route('/cam_3')
-def camera3():
-    return Response(cameras.generate_frames2(), mimetype='multipart/x-mixed-replace; boundary=frame')
+# Navigation Camera stream
+@app.route('/video_feed')
+def video_feed():
+    return Response(cameras1.generate_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
+@app.route('/video_feed1')
+def video_feed1():
+    return Response(cameras1.generate_frames1(), mimetype='multipart/x-mixed-replace; boundary=frame')
+@app.route('/video_feed2')
+def video_feed2():
+    return Response(cameras1.generate_frames2(), mimetype='multipart/x-mixed-replace; boundary=frame')
 ##
 
 @app.route('/get_sensor_data')
@@ -66,3 +69,4 @@ def about():
 
 if __name__ == '__main__':
     app.run(debug=True)
+

@@ -7,8 +7,7 @@ class ESP32FlightContoller:
     def __init__(self):
         return
     
-    # COM5 will be used for Windows
-    def getData(self): 
+    def getData(self):
         serial=serial.Serial('/dev/ttyUSB0', 9600, timeout=1)
         while True:
             if self.serial.in_waiting > 0:
@@ -19,10 +18,11 @@ class ESP32FlightContoller:
                     # Process or print the data
                     print(f"IMU Accel: {imu_ax}, {imu_ay}, {imu_az}")
                     print(f"IMU Gyro: {imu_gx}, {imu_gy}, {imu_gz}")
+                    print(f"Additional Accel: {accel_x}, {accel_y}, {accel_z}")
                     print(f"Ultrasonic: {ultrasonic}")
                     return data
                 elif len(data) != 10:
-                    # Information is missing
+                    # Informtion is missing
                     return "Unable to acces information"
             elif self.serial.in_waiting <= 0:
                 return 0
