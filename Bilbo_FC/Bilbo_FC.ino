@@ -27,11 +27,25 @@ Adafruit_BMP280 bmp;
 // variables for IMU and altimeter sensor
 float ax, ay, az, gx, gy, gz; // acceleration and gyroscope
 float pressure, altimeter;
+// RGB variable intialization
+const char RLed = 2;
+const char GLed = 4;
+const char BLed = 5;
+// Ultrasound sensor pinout
+const char trigPin = 18;
+const char echoPin = 19;
+long duration;
+float distance;
+
 // variables for time intervals
 unsigned long previousMillisBMP = 0;
 unsigned long previousMillisMPU = 0;
+unsigned long previousMillisUltrasound = 0;
 const unsigned long intervalBMP = 1000; // Read BMP280 every 1 seconds
 const unsigned long intervalMPU = 500;  // Read MPU6050 every 500 ms
+const unsigned long intervalUltrasound = 1200;
+
+int baudrate = 115200;
 
 void setup() {
   // # To initialize the LCD Screen
@@ -42,7 +56,14 @@ void setup() {
   //lcd.setCursor(0, 1);
   
   // Start Serial for debugging
-  Serial.begin(115200);
+  Serial.begin(baudrate);
+  // RGB LEDs
+  pinMode(RLed, OUTPUT);
+  pinMode(GLed, OUTPUT);
+  pinMode(BLed, OUTPUT);
+  // Ultrasound
+  pinMode(trigPin, OUTPUT); 
+  pinMode(echoPin, INPUT);
   
   // Initialize MPU6050
   imu.setup();
@@ -52,16 +73,16 @@ void setup() {
   //lcd.clear(); 
 
   unsigned status;
-   //status = bmp.begin(BMP280_ADDRESS_ALT, BMP280_CHIPID);
-  status = bmp.begin(0x76);
+  status = bmp.begin(0x76);  // bmp.begin(BMP280_ADDRESS_ALT, BMP280_CHIPID);
   if (!status) {
     Serial.println(F("Could not find a valid BMP280 sensor, check wiring or "
                       "try a different address!"));
-    Serial.print("SensorID was: 0x"); Serial.println(bmp.sensorID(),16);
-    Serial.print("        ID of 0xFF probably means a bad address, a BMP 180 or BMP 085\n");
-    Serial.print("   ID of 0x56-0x58 represents a BMP 280,\n");
-    Serial.print("        ID of 0x60 represents a BME 280.\n");
-    Serial.print("        ID of 0x61 represents a BME 680.\n");
+    Serial.print("SensorID was: 0x"); 
+    Serial.println(bmp.sensorID(),16);
+    Serial.print("ID of 0xFF probably means a bad address, a BMP 180 or BMP 085\n");
+    Serial.print("ID of 0x56-0x58 represents a BMP 280,\n");
+    Serial.print("ID of 0x60 represents a BME 280.\n");
+    Serial.print("ID of 0x61 represents a BME 680.\n");
     while (1) delay(10);
   }
   
@@ -134,6 +155,57 @@ void loop() {
     Serial.println(" m");
   }
 
-  // TODO: Ultrasound sensor with RGB Led indicator
+  if(currentMillis - previousMillisUltrasound >= intervalUltrasound)
+  {
+    previousMillisUltrasound = currentMillis;
+    // Clears the trigPin
+    digitalWrite(trigPin, LOW);
+    delayMicroseconds(2);  // Short stabilization delay
+  
+    // Triggers the sensor
+    digitalWrite(trigPin, HIGH);
+    delayMicroseconds(10);
+    digitalWrite(trigPin, LOW);
 
+    // Reads the echoPin, returns the duration
+    duration = pulseIn(echoPin, HIGH, 30000); // Timeout after 30 ms
+    if (duration == 0) {
+      Serial.println("No object detected or timeout");
+      return;
+    }
+
+    // Calculate the distance in cm
+    distance = duration * 0.034 / 2;
+  
+    // Print the distance
+    Serial.print("Distance: ");
+    Serial.print(distance);
+    Serial.println(" cm");
+
+    // lcd.setCursor(0, 0);
+    // lcd.print("Distance: ");
+    // lcd.setCursor(0, 1);
+    // lcd.print(distance);
+    // lcd.print(" cm");
+  
+    // Control the RGB LED
+    if (distance > 0 && distance <= 10) { // Very close
+      analogWrite(RLed, 255);
+      analogWrite(GLed, 0);
+      analogWrite(BLed, 0);
+    } else if (distance > 10 && distance <= 20) { // Medium range
+      analogWrite(RLed, 0);
+      analogWrite(GLed, 255);
+      analogWrite(BLed, 0);
+    } else if (distance > 20) { // Far
+      analogWrite(RLed, 0);
+      analogWrite(GLed, 0);
+      analogWrite(BLed, 0);
+    } else { // No valid reading
+      analogWrite(RLed, 100);
+      analogWrite(GLed, 100);
+      analogWrite(BLed, 100);
+    }
+    delay(200); // Short delay for better performance
+  }
 }
