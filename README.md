@@ -1,2 +1,31 @@
 # Bilbo explorer
-A control server capable of gathering data from a vehicle, issuing commands, establishing external communications, and generating real-time responses with various subsystems. Bilbo is an innovative and curious drone designed to explore the aerial spaces of any planet, embracing adventure to learn and grow.
+Bilbo is an innovative, curious bi-rotor drone designed to explore the aerial spaces of any planet, embracing adventure as it learns and grows.
+
+## Table of Contents
+- [Introduction](#introduction)
+- [Project Overview](#project-overview)
+  - [Concept](#concept)
+  - [Design Philosophy](#design-philosophy)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+- [Hardware](#hardware)
+  - [Components](#components)
+  - [Assembly Instructions](#assembly-instructions)
+- [Software](#software)
+  - [Firmware](#firmware)
+  - [Control Software](#control-software)
+- [Usage](#usage)
+  - [Flight Modes](#flight-modes)
+  - [Safety Guidelines](#safety-guidelines)
+- [Development](#development)
+  - [Contributing](#contributing)
+  - [Debugging and Troubleshooting](#debugging-and-troubleshooting)
+- [Community](#community)
+  - [Discussion Forums](#discussion-forums)
+  - [Contributors](#contributors)
+- [Documentation](#documentation)
+  - [API Reference](#api-reference)
+  - [Tutorials](#tutorials)
+- [License](#license)
+- [Acknowledgments](#acknowledgments)
