@@ -4,8 +4,6 @@ Bilbo is an innovative, curious bi-rotor drone designed to explore the aerial sp
 ## Table of Contents
 - [Introduction](#introduction)
 - [Project Overview](#project-overview)
-  - [Concept](#concept)
-  - [Design Philosophy](#design-philosophy)
 - [Getting Started](#getting-started)
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
