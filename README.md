@@ -41,6 +41,17 @@ and the proper adjustemnts done on this README file
 ## Prerequisites
 * Access to Internet
 * Access to Ethernet (recommended)
-* Access to a microcontroller or the ESP32 or Arduino family. 
-* The project its been worked on Windows or MACOS but if you use a Linux computer and you can run your IDE and upload the code into your microcontroller, it should be ok.
+* A microcontroller: ESP32 or Arduino family. 
+* The project its been worked on Windows and MACOS.
 * For the microcomputer, I'll be using a Jetson Nano (Possibility of adding changes to be used with Raspberry Pi)
+
+## Installation
+* Your desired IDE (recommend Visual Studio) to work on your server
+* Arduino IDE or PlatformIO for the microcontroller
+* Jetson Nano Developer Kit SD Card Image: https://developer.nvidia.com/embedded/learn/get-started-jetson-nano-devkit#write
+* Using Rpanion: https://www.docs.rpanion.com/software/rpanion-server (page to download the server image)
+* Download the code from this repo
+
+## Hardware
+## Components
+The electonic components used in this project are (as of now) the following:
