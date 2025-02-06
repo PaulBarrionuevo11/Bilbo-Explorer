@@ -1,170 +1,94 @@
+/* General Body Styling */
 body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    margin: 50px;
-}
-h1 {
-    color: #4CAF50;
-}
-button {
-    padding: 10px 20px;
-    background-color: #008CBA;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-button:hover {
-    background-color: #005f73;
-}
-
-#videoBox {
-    margin-top: 20px;
-    border: 2px solid #000; /* Black border for better visibility */
-    width: 320px; /* Adjust the width of the video box */
-    height: 240px; /* Adjust the height of the video box */
-    overflow: hidden;
-    display: inline-block;
-    background-color: #f0f0f0; /* Light gray background for aesthetics */
-}
-
-.read-text-margin
-{
-    margin-left: 15px;
-}
-
-/* Styling for the message container */
-.message-container {
-    background-color: #f8f9fa;
-    border: 1px solid #dee2e6;
-    border-radius: 5px;
-    padding: 10px;
-    margin-bottom: 10px;
-}
-
-ul.actions {
-    display: -ms-flex;
-    display: -webkit-flex;
-    display: -ms-flex;
     display: flex;
-    cursor: default;
-    list-style: none;
-    margin-left: -1rem;
-    padding-left: 0;
+    font-family: monospace, sans-serif, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
 }
 
+/* Sidebar Styling */
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    background-color: #dbe5ee;
+    padding: 15px;
+    position: fixed;
+}
 
-/* Box */
+.sidebar .nav-item .nav-link {
+    padding: 10px;
+    color: rgb(69, 72, 72);
+    font-size: 16px;
+}
 
-.box {
-    border-radius: 4px;
-    border: solid 1px #c9c9c9;
-    margin-bottom: 2em;
-    padding: 1.5em;
-    }
+.sidebar .nav-item .nav-link.active {
+    color: #0092e0;
+}
 
-    .box > :last-child,
-    .box > :last-child > :last-child,
-    .box > :last-child > :last-child > :last-child {
-        margin-bottom: 0;
-    }
+.sidebar .nav-item .nav-link:hover {
+    background-color: #c6d3df;
+    border-radius: 5px;
+}
 
-    .box.alt {
-        border: 0;
-        border-radius: 0;
-        padding: 0;
-    }
+.sidebar .nav-item:first-child .nav-link {
+    margin-bottom: 20px;
+    font-size: 18px;
+    text-align: center;
+    display: block;
+    font-family: monospace;
+}
 
-    /* Image */
+/* Main Content Styling */
+.content {
+    margin-left: 270px;
+    padding: 20px;
+    width: calc(100% - 270px);
+}
 
-.image {
-    border-radius: 4px;
-    border: 0;
-    display: inline-block;
-    position: relative;
-	}
+/* Title Styling */
+.page-title {
+    padding-bottom: 2rem;
+    color: rgb(33, 29, 29);
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    text-align: left;
+    font-size: 40px;
+}
 
-		.image img {
-			border-radius: 4px;
-			display: block;
-		}
-
-		.image.left, .image.right {
-			max-width: 40%;
-		}
-
-			.image.left img, .image.right img {
-				width: 100%;
-			}
-
-		.image.left {
-			float: left;
-			padding: 0 1.5em 1em 0;
-			top: 0.25em;
-		}
-
-		.image.right {
-			float: right;
-			padding: 0 0 1em 1.5em;
-			top: 0.25em;
-		}
-
-		.image.fit {
-			display: block;
-			margin: 0 0 2em 0;
-			width: 100%;
-		}
-
-			.image.fit img {
-				width: 100%;
-			}
-
-		.image.main {
-			display: block;
-			margin: 0 0 3em 0;
-			width: 100%;
-		}
-
-			.image.main img {
-				width: 100%;
-			}
-
-			@media screen and (max-width: 736px) {
-
-				.image.main {
-					margin: 0 0 2em 0;
-				}
-
-			}
-
-/* Set the box dimensions */
+/* Camera Box Styling */
 .camera-box {
-    width: 100%; /* Ensure it fits the container */
-    max-width: 300px; /* Set maximum width for the image */
-    height: 200px; /* Fixed height for the image */
-    object-fit: cover; /* Ensures the image fills the box without distortion */
-    border: 2px solid #ccc; /* Optional: Add a border for better visual separation */
-    border-radius: 10px; /* Optional: Add rounded corners hh */
+    width: 100%;
+    max-width: 500px;
+    height: 300px;
+    object-fit: cover;
+    border: 2px solid #ccc;
+    border-radius: 10px;
 }
 
-/* Row spacing */
+/* Grid Layout */
 .row.gtr-uniform {
     display: flex;
-    justify-content: center;
-    gap: 2%; /* Adjust spacing between the columns */
+    justify-content: space-evenly;
+    gap: 2%;
 }
 
-/* Column dimensions */
 .col-4 {
-    flex: 1; /* Make columns flexible */
-    max-width: 300px; /* Ensure columns don't exceed the maximum box size */
-    text-align: center; /* Center-align content in each column */
+    flex: 1;
+    max-width: 300px;
+    text-align: center;
 }
 
-.alt tr {
-    padding: 5px 0; /* This won't work as expected */
+/* Centered Title */
+.about-title {
+    text-align: center;
+    margin-top: 2%;
+    margin-bottom: 2%;
 }
 
-.alt td, .alt th {
-    padding: 5px 0; /* This is the effective way */
+/* Paragraph Styling */
+.about-text {
+    margin-left: 2%;
+    font-size: 16px;
+    line-height: 1.5;
+    font-family: 'Segoe UI';
 }

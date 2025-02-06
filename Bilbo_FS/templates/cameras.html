@@ -5,71 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Flask Frontend</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <style>
-        /* Navbar and h2 styling */
-        h2 {
-            color: white;
-            background-color: #343a40;
-            padding: 10px;
-            border-radius: 5px;
-            margin: 0;
-        }
-
-        /* Message container styling */
-        .message-container {
-            background-color: #f8f9fa;
-            border: 1px solid #dee2e6;
-            border-radius: 5px;
-            padding: 10px;
-            margin-bottom: 10px;
-        }
-
-        /* Camera box styling */
-        .camera-box {
-            width: 100%; /* Fit the column */
-            max-width: 500px; /* Set max width for the image */
-            height: 300px; /* Set a fixed height */
-            object-fit: cover; /* Ensure the image scales correctly */
-            border: 2px solid #ccc; /* Optional border for better visuals */
-            border-radius: 10px; /* Optional rounded corners */
-        }
-
-        /* Row and column layout */
-        .row.gtr-uniform {
-            display: flex;
-            justify-content: space-evenly; /* Space columns evenly */
-            gap: 2%; /* Adjust spacing between columns */
-        }
-
-        .col-4 {
-            flex: 1;
-            max-width: 300px; /* Limit column width */
-            text-align: center; /* Center-align column content */
-        }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <h2>Bilbo Flight Server</h2>
-        <p class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('home') }}">Home</a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="{{ url_for('cameras') }}">Camera Stream</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('about') }}">About</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled" href="#">Disabled</a>
-                </li>
-            </ul>
-        </p>
+    <nav class="sidebar">
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link disabled title" href="#">Bilbo GS</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('home') }}">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="{{ url_for('cameras') }}">Camera Stream</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{url_for('about')}}">About</a>
+            </li>
+        </ul>
     </nav>
-    <div style="margin: 2%;">
-        <h3 style="padding-bottom: 2rem;">Camera Stream</h3>
+
+    <div class="content">
+        <h3 class="page-title">Camera Stream</h3>
         <div class="box alt">
             <div class="row gtr-uniform">
                 <!-- Camera 1 -->
@@ -86,13 +43,13 @@
                     </span>
                     <span>"Camera 2"</span>
                 </div>
-                <!-- Camera 2 -->
+                <!-- Camera 3 -->
                 <div class="col-4">
-                  <span class="image fit">
-                      <img src="{{ url_for('video_feed2') }}" alt="Camera 3 Stream" class="camera-box">
-                  </span>
-                  <span>"Camera 3"</span>
-              </div>
+                    <span class="image fit">
+                        <img src="{{ url_for('video_feed2') }}" alt="Camera 3 Stream" class="camera-box">
+                    </span>
+                    <span>"Camera 3"</span>
+                </div>
             </div>
         </div>
     </div>

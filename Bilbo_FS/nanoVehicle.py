@@ -1,14 +1,13 @@
 import os
 import serial
 
-class Vehicle:
+class NanoVehicle:
 
     # Initialize parameters
     def __init__(self, hostname):
         self.hostname = hostname
 
     ## VEHICLE DATA
-    # Get operating system
     def get_os(self):
         os_name = os.name
         if os_name == "nt":
@@ -18,13 +17,11 @@ class Vehicle:
         print("Operating system:", os_name)
         return os_name
 
-    # Get current working directory
     def get_path_dir(self):
         current_dir = os.getcwd()
         print("Current directory:", current_dir)
         return current_dir
 
-    # Get hostname
     def get_hostname(self):
         return self.hostname
 

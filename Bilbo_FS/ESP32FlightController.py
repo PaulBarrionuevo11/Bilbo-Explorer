@@ -1,28 +1,32 @@
-import serial
+import requests
 
 class ESP32FlightContoller:
     
     # Initialize parameters
-    # Add specific serial port, baudrate and timeout if needed
-    def __init__(self):
-        return
+    def __init__(self, ipAddress, port):
+        self.ip = ipAddress
+        self.port = port
+        self.url = f'http://{ipAddress}:{port}'
+        self.connections = []    
+
+    def add_connection(self, device):
+        self.connections.append(device)
     
-    def getData(self):
-        serial=serial.Serial('/dev/ttyUSB0', 9600, timeout=1)
-        while True:
-            if self.serial.in_waiting > 0:
-                line = self.serial.readline().decode('utf-8').rstrip()
-                data = line.split(',')
-                if len(data) == 10:  # Ensure we have all 10 pieces of data
-                    imu_ax, imu_ay, imu_az, imu_gx, imu_gy, imu_gz, accel_x, accel_y, accel_z, ultrasonic = data     
-                    # Process or print the data
-                    print(f"IMU Accel: {imu_ax}, {imu_ay}, {imu_az}")
-                    print(f"IMU Gyro: {imu_gx}, {imu_gy}, {imu_gz}")
-                    print(f"Additional Accel: {accel_x}, {accel_y}, {accel_z}")
-                    print(f"Ultrasonic: {ultrasonic}")
-                    return data
-                elif len(data) != 10:
-                    # Informtion is missing
-                    return "Unable to acces information"
-            elif self.serial.in_waiting <= 0:
-                return 0
+    def get_connections(self):
+        count = 0
+        for device in self.connections:
+            count = 1 + count
+            print(device)
+        return self.connections, "Number of connections: ", count
+    
+    def get_AP_connections(self):
+        try:
+            response = requests.get(self.url, timeout=2)
+            response.raise_for_status()
+            print(response.text)
+            return response.text
+        except requests.RequestException as e:
+            message = " Unable to pair with FC"
+            print(f"Unable to pair with FC: {e}")
+            return message
+        
