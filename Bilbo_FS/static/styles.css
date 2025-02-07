@@ -2,30 +2,30 @@
 body {
     display: flex;
     font-family: monospace, sans-serif, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f8f9fa;
+    background-color: #150101;
 }
 
 /* Sidebar Styling */
 .sidebar {
-    width: 250px;
+    width: 205px;
     height: 100vh;
-    background-color: #dbe5ee;
+    background-color: #0f0000;
     padding: 15px;
     position: fixed;
 }
 
 .sidebar .nav-item .nav-link {
     padding: 10px;
-    color: rgb(69, 72, 72);
+    color: rgb(141, 131, 131);
     font-size: 16px;
 }
 
 .sidebar .nav-item .nav-link.active {
-    color: #0092e0;
+    color: #fdfdfd;
 }
 
 .sidebar .nav-item .nav-link:hover {
-    background-color: #c6d3df;
+    background-color: #d6d6d6;
     border-radius: 5px;
 }
 
@@ -39,7 +39,7 @@ body {
 
 /* Main Content Styling */
 .content {
-    margin-left: 270px;
+    margin-left: 230px;
     padding: 20px;
     width: calc(100% - 270px);
 }
@@ -47,12 +47,19 @@ body {
 /* Title Styling */
 .page-title {
     padding-bottom: 2rem;
-    color: rgb(33, 29, 29);
+    color: rgb(141, 131, 131);
     padding: 10px;
     border-radius: 5px;
     margin-bottom: 20px;
     text-align: left;
     font-size: 40px;
+}
+.page-subtitle {
+    color: rgb(255, 255, 255);
+    border-radius: 5px;
+    margin-left: 10px;
+    text-align: left;
+    font-family: 'Segoe UI';
 }
 
 /* Camera Box Styling */
@@ -61,7 +68,7 @@ body {
     max-width: 500px;
     height: 300px;
     object-fit: cover;
-    border: 2px solid #ccc;
+    border: 2px solid #ffffff;
     border-radius: 10px;
 }
 
@@ -83,12 +90,63 @@ body {
     text-align: center;
     margin-top: 2%;
     margin-bottom: 2%;
+    color: #ffffff;
+
 }
 
 /* Paragraph Styling */
 .about-text {
+    color: #ffffff;
     margin-left: 2%;
     font-size: 16px;
     line-height: 1.5;
     font-family: 'Segoe UI';
+}
+
+.sensor-container { 
+    font-size: 22px; margin-top: 20px; 
+}
+.sensor-value { 
+    font-weight: bold; color: #ffffff; 
+}
+/* Status Box (Top-Right Corner) */
+.status-box {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: rgba(40, 37, 37, 0.9);
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(176, 173, 173, 0.2);
+    text-align: left;
+    min-width: 150px;
+    color: #ffffff;
+}
+
+/* Individual Status Items */
+.status-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+/* Status Dot Styling */
+.status-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+/* Color Changes Based on Connection */
+.connected {
+    background-color: green;
+}
+
+.disconnected {
+    background-color: red;
 }
