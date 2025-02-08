@@ -2,12 +2,12 @@ from flask import Flask, Response, render_template
 from flask_socketio import SocketIO
 from nanoVehicle import NanoVehicle
 from navigationCamera import MarsCamera
-from ESP32FlightController import ESP32FlightContoller
+from ESP32FlightController import ESP32FlightController
 
 app = Flask(__name__)
-socketio = SocketIO(app, cors_allowed_origins="*")
+# socketio = SocketIO(app, cors_allowed_origins="*")
 
-esp32FC = ESP32FlightContoller("192.168.4.1", 80)
+esp32FC = ESP32FlightController("192.168.4.1", 80)
 vehicle = NanoVehicle(hostname="Mars Rover")
 cameras1 = MarsCamera()
 
@@ -23,14 +23,6 @@ def home():
     hostname = vehicle.get_hostname()
     AP_status = esp32FC.get_IP_connections()
     device_connection = esp32FC.get_count_IP_connections()
-    # try:
-    #     while True:
-    #         esp32FC.get_data()
-    #         time.sleep(1)
-    # except KeyboardInterrupt:
-    #     print("Stopping data collection...")
-    # finally:
-    #     esp32FC.close_connection()
 
     # Pass data to the frontend
     return render_template(
@@ -66,8 +58,8 @@ def about():
     return render_template("about.html")
 
 if __name__ == '__main__':
-    import threading
-    thread = threading.Thread(target=esp32FC.read_serial(), daemon=True)
-    thread.start()
-    socketio.run(debug=True)
+    # import threading
+    # thread = threading.Thread(target=esp32FC.read_serial(), daemon=True).start()
+    # thread.start()
+    app.run(debug=True)
 
