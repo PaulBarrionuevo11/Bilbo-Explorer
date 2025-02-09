@@ -2,7 +2,7 @@ import cv2
 import os
 
 
-class MarsCamera:
+class RoverCamera:
     def __init__(self):
         # Initialize cameras
         ## FOR JETSON NANO
