@@ -1,5 +1,4 @@
-from flask import Flask, Response, render_template
-from flask_socketio import SocketIO
+from flask import Flask, Response, render_template, jsonify
 from nanoVehicle import NanoVehicle
 from navigationCamera import MarsCamera
 from ESP32FlightController import ESP32FlightController
@@ -11,18 +10,22 @@ esp32FC = ESP32FlightController("192.168.4.1", 80)
 vehicle = NanoVehicle(hostname="Mars Rover")
 cameras1 = MarsCamera()
 
-# Start Serial Reading in Background
-# threading.Thread(target=esp32FC.read_serial(), daemon=True).start()
-
 @app.route("/")
 def home():
-    serial_connection = esp32FC.open_serial_connection()
     # Get ESP32 and Jetson Nano dat
     os_name = vehicle.get_os()
     current_dir = vehicle.get_path_dir()
     hostname = vehicle.get_hostname()
     AP_status = esp32FC.get_IP_connections()
     device_connection = esp32FC.get_count_IP_connections()
+    # try:
+    #     while True:
+    #         esp32FC.get_data()
+    #         time.sleep(1)
+    # except KeyboardInterrupt:
+    #     print("Stopping data collection...")
+    # finally:
+    #     esp32FC.close_connection()
 
     # Pass data to the frontend
     return render_template(
@@ -31,8 +34,7 @@ def home():
         current_dir=current_dir,
         hostname=hostname,
         AP_status=AP_status,
-        device_connection = device_connection,
-        serial_connection = serial_connection
+        device_connection = device_connection
         # serial_status=serial_status,
     )
 
@@ -52,14 +54,22 @@ def video_feed1():
 @app.route('/video_feed2')
 def video_feed2():
     return Response(cameras1.generate_frames2(), mimetype='multipart/x-mixed-replace; boundary=frame')
+##
+# @app.route('/get_sensor_data')
+# def get_sensor_data():
+#     try:
+#         # Fetch sensor data from ESP32
+#         response = requests.get(ESP_URL, timeout=5)
+#         response.raise_for_status()  # Raises an HTTPError for bad responses
+#         return response.text
+#     except requests.RequestException as e:
+#         print(f"Error fetching data from ESP32: {e}")
+#         return "Error: Could not retrieve data from ESP32", 500
     
 @app.route('/about')
 def about():
     return render_template("about.html")
 
 if __name__ == '__main__':
-    # import threading
-    # thread = threading.Thread(target=esp32FC.read_serial(), daemon=True).start()
-    # thread.start()
     app.run(debug=True)
 

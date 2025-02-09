@@ -1,13 +1,9 @@
 import requests
-import serial
-import time
-import socketio
-from flask import json
 
 class ESP32FlightController:
     
     # Initialize parameters
-    def __init__(self, ipAddress, ipPort, serial_port="/dev/ttyUSB0", baudrate=115200):
+    def __init__(self, ipAddress, port, ):
         self.ip = ipAddress
         self.ipPort = ipPort
         self.url = f'http://{ipAddress}:{ipPort}'
@@ -18,23 +14,25 @@ class ESP32FlightController:
         self.ap_connected = False  # Track connection status
 
 
-    def add_IP_connection(self, device):
+
+    def add_APconnection(self, device):
         self.IPconnections.append(device)
     
-    def get_count_IP_connections(self):
+    def get_connections(self):
         count = 0
-        for device in self.IPconnections:
+        for device in self.connections:
             count = 1 + count
             print(device)
-        return self.IPconnections, "Number of AP connections: ", count
+        return self.connections, "Number of connections: ", count
     
-    def get_IP_connections(self):
+    def get_AP_connections(self):
         try:
             response = requests.get(self.url, timeout=2)
             response.raise_for_status()
             print(response.text)
-            self.ap_connected = True
+            return response.text
         except requests.RequestException as e:
+            message = " Unable to pair with FC"
             print(f"Unable to pair with FC: {e}")
             self.serial_connection = None  # No connection, but program still runs
         
@@ -48,22 +46,20 @@ class ESP32FlightController:
             print(f"Error: Could not open serial port {self.serial_port}. Running in simulation mode.")
             self.serial_connection = None  # No connection, but program still runs
     
-    # sensor_data = {"pressure": "--", "altitude": "--", "acceleration": "--", "gyroscope": "--"}  
+    sensor_data = {"pressure": "--", "altitude": "--", "acceleration": "--", "gyroscope": "--"}  
 
-    # def read_serial(self):
-    #     """Read UART and update web UI"""
-    #     global sensor_data
-    #     while True:
-    #         try:
-    #             line = self.serial_connection.read().decode().strip()
-    #             if line:
-    #                 print(f"Received: {line}")
-    #                 sensor_data = json.loads(line)  
-    #                 # socketio.emit("sensor_update", sensor_data)  
-    #             else:
-    #                 print("No data received")
-    #         except Exception as e:
-    #             print(f"Error: {e}")
+    def read_serial(self):
+        """Read UART and update web UI"""
+        global sensor_data
+        while True:
+            try:
+                line = self.serial_connection.readline().decode().strip()
+                if line:
+                    print(f"Received: {line}")
+                    sensor_data = json.loads(line)  
+                    socketio.emit("sensor_update", sensor_data)  
+            except Exception as e:
+                print(f"Error: {e}")
 
     def close_connection(self):
         # Close the serial connection

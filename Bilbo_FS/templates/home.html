@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bilbo Ground Station</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
@@ -18,9 +17,6 @@
                 <a class="nav-link active" href="{{ url_for('home') }}">Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('sensor_data') }}">Flight</a>
-            </li>
-            <li class="nav-item">
                 <a class="nav-link" href="{{ url_for('cameras') }}">Camera Stream</a>
             </li>
             <li class="nav-item">
@@ -28,19 +24,6 @@
             </li>
         </ul>
     </nav>
-
-    <!-- Status Container in the Top-Right Corner -->
-    <div class="status-box">
-        <h4>Status</h4>
-        <div class="status-item">
-            <span class="status-dot {% if serial_connection %}connected{% else %}disconnected{% endif %}"></span>
-            <span>Serial: {% if serial_connection %}Connected{% else %}Disconnected{% endif %}</span>
-        </div>
-        <div class="status-item">
-            <span class="status-dot {% if AP_status %}connected{% else %}disconnected{% endif %}"></span>
-            <span>AP: {% if AP_status %}Connected{% else %}Disconnected{% endif %}</span>
-        </div>
-    </div>
     
     <div class="content">
     <h3 class="page-title">Home Page</h3>
@@ -60,6 +43,14 @@
                             <td>Hostname: </td>
                             <td>{{ hostname }}</td>
                         </tr>
+                        <!-- <tr>
+                            <th>Serial Status: </th>
+                            <td>{{ serial_status }}</td>
+                        </tr> -->
+                        <tr class="about-text">
+                            <td>AP Status: </td>
+                            <td>{{ AP_status }}</td>
+                        </tr>
                         <tr class="about-text">
                             <td>Connections: </td>
                             <td>{{ device_connection }}</td>
@@ -68,11 +59,11 @@
                 </table>
             </div>
         </div>
-        <!-- <div class="about-text">Temperature: <span id="temp" class="sensor-value">--</span> °C</div>
+        <div class="about-text">Temperature: <span id="temp" class="sensor-value">--</span> °C</div>
         <div class="about-text">Humidity: <span id="hum" class="sensor-value">--</span> %</div>
-        <div class="about-text">Pressure: <span id="press" class="sensor-value">--</span> hPa</div> -->
+        <div class="about-text">Pressure: <span id="press" class="sensor-value">--</span> hPa</div>
     
-        <!-- <script>
+        <script>
             var socket = io.connect("http://" + document.domain + ":" + location.port);
     
             socket.on("esp32_data", function (data) {
@@ -88,7 +79,7 @@
                     document.getElementById("press").innerText = data.PRESS;
                 }
             });
-        </script> -->
+        </script>
 
     </div>
 
