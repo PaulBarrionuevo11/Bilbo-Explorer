@@ -4,7 +4,7 @@ from navigationCamera import MarsCamera
 from ESP32FlightController import ESP32FlightController
 
 app = Flask(__name__)
-# socketio = SocketIO(app, cors_allowed_origins="*")
+socketio = SocketIO(app, cors_allowed_origins="*")
 
 esp32FC = ESP32FlightController("192.168.4.1", 80)
 vehicle = NanoVehicle(hostname="Mars Rover")
@@ -16,16 +16,8 @@ def home():
     os_name = vehicle.get_os()
     current_dir = vehicle.get_path_dir()
     hostname = vehicle.get_hostname()
-    AP_status = esp32FC.get_IP_connections()
-    device_connection = esp32FC.get_count_IP_connections()
-    # try:
-    #     while True:
-    #         esp32FC.get_data()
-    #         time.sleep(1)
-    # except KeyboardInterrupt:
-    #     print("Stopping data collection...")
-    # finally:
-    #     esp32FC.close_connection()
+    AP_status = esp32FC.get_AP_connections()
+    device_connection = esp32FC.get_connections()
 
     # Pass data to the frontend
     return render_template(

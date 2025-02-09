@@ -59,28 +59,6 @@
                 </table>
             </div>
         </div>
-        <div class="about-text">Temperature: <span id="temp" class="sensor-value">--</span> °C</div>
-        <div class="about-text">Humidity: <span id="hum" class="sensor-value">--</span> %</div>
-        <div class="about-text">Pressure: <span id="press" class="sensor-value">--</span> hPa</div>
-    
-        <script>
-            var socket = io.connect("http://" + document.domain + ":" + location.port);
-    
-            socket.on("esp32_data", function (data) {
-                console.log("Received data:", data);
-                
-                if (data.TEMP) {
-                    document.getElementById("temp").innerText = data.TEMP;
-                }
-                if (data.HUM) {
-                    document.getElementById("hum").innerText = data.HUM;
-                }
-                if (data.PRESS) {
-                    document.getElementById("press").innerText = data.PRESS;
-                }
-            });
-        </script>
-
     </div>
 
     <script src="{{ url_for('static', filename='script.js') }}"></script>
