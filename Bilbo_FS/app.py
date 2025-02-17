@@ -3,14 +3,24 @@ from flask_socketio import SocketIO
 from nanoVehicle import NanoVehicle
 from navigationCamera import RoverCamera
 from ESP32FlightController import ESP32FlightController
+import threading
 
 app = Flask(__name__)
 socketio = SocketIO(app, cors_allowed_origins="*")
 
 esp32FC = ESP32FlightController()
 esp32FC.open_serial_connection()
+serial_connection = esp32FC.is_serial_connected
+
+
+thread = threading.Thread(target=esp32FC.read_esp32_data, daemon=True)
+thread.start()
+
 rover = NanoVehicle(hostname="Mars Rover")
 roverCam = RoverCamera()
+
+
+
 
 @app.route("/")
 def home():
@@ -18,7 +28,7 @@ def home():
     os_name = rover.get_os()
     current_dir = rover.get_path_dir()
     hostname = rover.get_hostname()
-    serial_connection = esp32FC.is_serial_connected
+    esp32FC.open_serial_connection()
 
     # Pass data to the frontend
     return render_template(
@@ -32,7 +42,14 @@ def home():
 
 @app.route('/flight')
 def flight():  # Make sure this matches 'sensor_data'
-    return render_template('control_panel.html')
+    return render_template(
+        'control_panel.html',
+        serial_connection = serial_connection
+)
+
+@app.route('/sensor_data')
+def sensor_data():
+    return jsonify(esp32FC.sensor_data)
 
 @app.route('/cameras')
 def cameras():
