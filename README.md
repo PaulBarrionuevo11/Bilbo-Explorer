@@ -49,7 +49,7 @@ Documentation will be updated in this file accordingly.
 * Using Rpanion: https://www.docs.rpanion.com/software/rpanion-server (page to download the server image)
 * Download the code from this repo
 
-## Hardware
+# Hardware
 ## Components
 The electonic components used in this project are (as of now) the following:
 * A microcontroller: ESP32 or Arduino family. 
