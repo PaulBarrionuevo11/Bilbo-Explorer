@@ -30,7 +30,7 @@ Bilbo is an innovative, curious bi-rotor drone designed to explore the aerial sp
 
 
 # Introduction
-Bilbo is the aspiration of drones flying the airspace of the planet Earth and maybe one day Mars. With the combination of a strong design, computer architecture and the understanding of the laws of physics, Bilbo tries to motivate an ambitious project that can be share with others.
+Bilbo is the aspiration of drones flying the airspace of the planet Earth and maybe one day Mars. With the combination of a strong design, computer architecture and the understanding of the laws of physics.
 
 # Project Overview
 The Idea is to work with relative out of the shelf components and the set up a flight controller and adjust PID controllers from a bench. Then move it to a real drone and validate the calibrated parameters. 
