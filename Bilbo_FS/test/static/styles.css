@@ -1,0 +1,194 @@
+/* General Body Styling */
+body {
+    display: flex;
+    font-family: monospace, sans-serif, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #150101;
+}
+
+/* Sidebar Styling */
+.sidebar {
+    width: 205px;
+    height: 100vh;
+    background: rgba(40, 37, 37, 0.9);
+    padding: 15px;
+    position: fixed;
+}
+
+.sidebar .nav-item .nav-link {
+    padding: 10px;
+    color: rgb(141, 131, 131);
+    font-size: 16px;
+}
+
+.sidebar .nav-item .nav-link.active {
+    color: #fdfdfd;
+}
+
+.sidebar .nav-item .nav-link:hover {
+    background-color: #d6d6d6;
+    border-radius: 5px;
+}
+
+.sidebar .nav-item:first-child .nav-link {
+    margin-bottom: 20px;
+    font-size: 18px;
+    text-align: center;
+    display: block;
+    font-family: monospace;
+}
+
+/* Main Content Styling */
+.content {
+    margin-left: 230px;
+    padding: 20px;
+    width: calc(100% - 270px);
+}
+
+/* Title Styling */
+.page-title {
+    padding-bottom: 2rem;
+    color: rgb(141, 131, 131);
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    text-align: left;
+    font-size: 40px;
+}
+.page-subtitle {
+    color: rgb(255, 255, 255);
+    border-radius: 5px;
+    margin-left: 10px;
+    text-align: left;
+    font-family: 'Segoe UI';
+}
+
+/* Camera Box Styling */
+.camera-box {
+    width: 100%;
+    max-width: 500px;
+    height: 300px;
+    object-fit: cover;
+    border: 2px solid #ffffff;
+    border-radius: 10px;
+}
+
+/* Grid Layout */
+.row.gtr-uniform {
+    display: flex;
+    justify-content: space-evenly;
+    gap: 2%;
+}
+
+.col-4 {
+    flex: 1;
+    max-width: 300px;
+    text-align: center;
+}
+
+/* Centered Title */
+.about-title {
+    text-align: left;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    color: #ffffffda;
+    font-family: 'Segoe UI';
+    font-weight: bold ;
+
+}
+
+/* Paragraph Styling */
+.about-text {
+    color: #ffffffc8;
+    margin-left: 2%;
+    font-size: 16px;
+    line-height: 1;
+    font-family: 'Segoe UI';
+}
+
+.sensor-container { 
+    font-size: 17px; margin-top: 5px; 
+}
+.sensor-value { 
+    font-weight: bold; color: #ffffff; 
+}
+/* Status Box (Top-Right Corner) */
+.status-box {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: rgba(40, 37, 37, 0.9);
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(176, 173, 173, 0.2);
+    text-align: left;
+    min-width: 150px;
+    color: #ffffff;
+}
+
+/* Individual Status Items */
+.status-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+    font-size: small;
+    font-weight: bold;
+    color: #ffffff94;
+}
+
+/* Status Dot Styling */
+.status-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+/* Color Changes Based on Connection */
+.connected {
+    background-color: green;
+}
+
+.disconnected {
+    background-color: red;
+}
+
+.main-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 20px;
+    width: 100%;
+}
+
+
+.widget-container {
+    width: 200px;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.widget-container h4 {
+    margin-bottom: 10px;
+    font-size: medium;
+    color: #ffffff;
+}
+
+.widget-container .btn {
+    width: 80%;
+    margin-bottom: 10px;
+}
+
+/* Right side (Status & Controls) */
+.right-panel {
+    position: absolute;
+    top: 150px;  /* Adjust top position as needed */
+    right: 20px; /* Distance from the right edge */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    width: 200px;
+}
