@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bilbo Ground Station</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <nav class="sidebar">
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link disabled" href="#" style="margin-bottom: 20px; display: block;">Bilbo GS</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="{{ url_for('home') }}">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('flight') }}">Control Panel</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('cameras') }}">Camera Stream</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{url_for('about')}}">About</a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Status Container in the Top-Right Corner -->
+    <div class="status-box">
+        <h4 style="font-size: medium;">Status</h4>
+        <div class="status-item">
+            <span class="status-dot {% if serial_connection %}connected{% else %}disconnected{% endif %}"></span>
+            <span>Serial: {% if serial_connection %}Connected{% else %}Disconnected{% endif %}</span>
+        </div>
+    </div>
+    
+    <div class="content">
+        <h3 class="page-title">Home Page</h3>
+        <div style="margin: 2%; padding-top: 7px;">
+            <div class="table-wrapper">
+                <table class="alt">
+                    <tbody>
+                        <tr >
+                            <td class="about-title">OS: </td>
+                            <td class="about-text">{{ os_name }}</td>
+                        </tr>            
+                        <tr>
+                            <td class="about-title">Directory: </td>
+                            <td class="about-text">{{ current_dir }}</td>
+                        </tr>
+                        <tr>
+                            <td class="about-title">Hostname: </td>
+                            <td class="about-text">{{ hostname }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script> <!-- Fixed jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>

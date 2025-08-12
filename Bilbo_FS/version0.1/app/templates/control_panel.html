@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bilbo | Control Panel</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <nav class="sidebar">
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link disabled" href="#" style="margin-bottom: 20px; display: block;">Bilbo GS</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('home') }}">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="{{ url_for('flight') }}">Control Panel</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('cameras') }}">Camera Stream</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{url_for('about')}}">About</a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Status Container in the Top-Right Corner -->
+    <div class="status-box">
+        <h4 style="font-size: medium;">Status</h4>
+        <div class="status-item">
+            <span class="status-dot {% if serial_connection %}connected{% else %}disconnected{% endif %}"></span>
+            <span>Serial: {% if serial_connection %}Connected{% else %}Disconnected{% endif %}</span>
+        </div>
+    </div>
+    
+    <div class="content">
+        <h3 class="page-title">Control Panel</h3>
+        <div class="main-container">
+            <!-- Left Panel (Sensor Data) -->
+            <div class="sensor-container">
+                <div class="sensor-box">
+                    <p class="about-title">Altimeter</p>
+                    <p class="about-text">Pressure: <span id="pressure">--</span> hPa</p>
+                    <p class="about-text">Altitude: <span id="altitude">--</span> m</p>
+                </div>
+        
+                <div class="sensor-box">
+                    <p class="about-title">Accelerometer</p>
+                    <p class="about-text">X: <span id="acc_x">--</span> m/s²</p>
+                    <p class="about-text">Y: <span id="acc_y">--</span> m/s²</p>
+                    <p class="about-text">Z: <span id="acc_z">--</span> m/s²</p>
+                </div>
+        
+                <div class="sensor-box">
+                    <p class="about-title">Gyroscope</p>
+                    <p class="about-text">X: <span id="gyro_x">--</span> °/s</p>
+                    <p class="about-text">Y: <span id="gyro_y">--</span> °/s</p>
+                    <p class="about-text">Z: <span id="gyro_z">--</span> °/s</p>
+                </div>
+            </div>
+        
+            <!-- Right Panel (Status & Controls) -->
+            <div class="right-panel">
+                <div class="widget-container">
+                    <h4>Controls</h4>
+                    <button class="btn btn-primary" style="font-size: small;">Start</button>
+                    <button class="btn btn-danger" style="font-size: small;">Stop</button>
+                </div>
+            </div>
+        </div>
+        
+    
+        <script>
+            function fetchSensorData() {
+                fetch('/sensor_data')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('pressure').innerText = data.pressure || '--';
+                    document.getElementById('altitude').innerText = data.altitude || '--';
+    
+                    document.getElementById('acc_x').innerText = data.acceleration.x || '--';
+                    document.getElementById('acc_y').innerText = data.acceleration.y || '--';
+                    document.getElementById('acc_z').innerText = data.acceleration.z || '--';
+    
+                    document.getElementById('gyro_x').innerText = data.gyroscope.x || '--';
+                    document.getElementById('gyro_y').innerText = data.gyroscope.y || '--';
+                    document.getElementById('gyro_z').innerText = data.gyroscope.z || '--';
+                })
+                .catch(error => console.error("Error fetching sensor data:", error));
+            }
+    
+            setInterval(fetchSensorData, 1000);  // Refresh data every second
+        </script>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script> <!-- Fixed jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>

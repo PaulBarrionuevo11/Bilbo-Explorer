@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flask Frontend</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <nav class="sidebar">
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link disabled title" href="#">Bilbo GS</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('home') }}">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('flight') }}">Control Panel</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="{{ url_for('cameras') }}">Camera Stream</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{url_for('about')}}">About</a>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="content">
+        <h3 class="page-title">Camera Stream</h3>
+        <div class="box alt">
+            <div class="row gtr-uniform">
+                <!-- Camera 1 -->
+                <div class="col-4">
+                    <span class="image fit">
+                        <img src="{{ url_for('video_feed') }}" alt="Camera 1 Stream" class="camera-box">
+                    </span>
+                    <span>"Camera 1"</span>
+                </div>
+                <!-- Camera 2 -->
+                <div class="col-4">
+                    <span class="image fit">
+                        <img src="{{ url_for('video_feed1') }}" alt="Camera 2 Stream" class="camera-box">
+                    </span>
+                    <span>"Camera 2"</span>
+                </div>
+                <!-- Camera 3 -->
+                <div class="col-4">
+                    <span class="image fit">
+                        <img src="{{ url_for('video_feed2') }}" alt="Camera 3 Stream" class="camera-box">
+                    </span>
+                    <span>"Camera 3"</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

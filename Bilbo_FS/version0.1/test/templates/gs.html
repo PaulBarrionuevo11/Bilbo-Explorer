@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bilbo | Sensor Data</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .sensor-container { display: flex; flex-direction: column; gap: 20px; }
+        .sensor-box { border: 1px solid #ddd; padding: 10px; }
+        .status-dot { height: 10px; width: 10px; background-color: #bbb; border-radius: 50%; display: inline-block; }
+        .status-dot.connected { background-color: #28a745; }
+        .status-dot.disconnected { background-color: #dc3545; }
+    </style>
+</head>
+<body>
+    <h1>Sensor Data</h1>
+    <div class="status-box">
+        <h4 style="font-size: medium;">Status</h4>
+        <div class="status-item">
+            <span class="status-dot {% if uart_connection %}connected{% else %}disconnected{% endif %}" id="serial-status"></span>
+            <span id="serial-text">Serial: {% if uart_connection %}Connected{% else %}Disconnected{% endif %}</span>
+        </div>
+    </div>
+
+    <div class="sensor-container">
+        <div class="sensor-box">
+            <p class="about-title">Altimeter</p>
+            <p class="about-text">Pressure: <span id="pressure">--</span> hPa</p>
+            <p class="about-text">Altitude: <span id="altitude">--</span> m</p>
+        </div>
+        <div class="sensor-box">
+            <p class="about-title">Accelerometer</p>
+            <p class="about-text">X: <span id="acc_x">--</span> m/s²</p>
+            <p class="about-text">Y: <span id="acc_y">--</span> m/s²</p>
+            <p class="about-text">Z: <span id="acc_z">--</span> m/s²</p>
+        </div>
+        <div class="sensor-box">
+            <p class="about-title">Gyroscope</p>
+            <p class="about-text">X: <span id="gyro_x">--</span> °/s</p>
+            <p class="about-text">Y: <span id="gyro_y">--</span> °/s</p>
+            <p class="about-text">Z: <span id="gyro_z">--</span> °/s</p>
+        </div>
+    </div>
+
+    <script>
+        const source = new EventSource('/sensor_stream');
+
+        source.onopen = function() {
+            console.log('Connected to SSE stream');
+            document.getElementById('serial-status').className = 'status-dot connected';
+            document.getElementById('serial-text').textContent = 'Serial: Connected';
+        };
+
+        source.onmessage = function(event) {
+            console.log('Raw message received:', event.data);
+            const data = JSON.parse(event.data);
+            console.log('Parsed data:', data);
+            document.getElementById('pressure').textContent = data.pressure === '--' ? '--' : (data.pressure / 100).toFixed(2);
+            document.getElementById('altitude').textContent = data.altitude === '--' ? '--' : data.altitude.toFixed(2);
+            document.getElementById('acc_x').textContent = data.acceleration.x === '--' ? '--' : data.acceleration.x.toFixed(2);
+            document.getElementById('acc_y').textContent = data.acceleration.y === '--' ? '--' : data.acceleration.y.toFixed(2);
+            document.getElementById('acc_z').textContent = data.acceleration.z === '--' ? '--' : data.acceleration.z.toFixed(2);
+            document.getElementById('gyro_x').textContent = data.gyroscope.x === '--' ? '--' : data.gyroscope.x.toFixed(2);
+            document.getElementById('gyro_y').textContent = data.gyroscope.y === '--' ? '--' : data.gyroscope.y.toFixed(2);
+            document.getElementById('gyro_z').textContent = data.gyroscope.z === '--' ? '--' : data.gyroscope.z.toFixed(2);
+        };
+
+        source.onerror = function() {
+            console.error('SSE error occurred');
+            document.getElementById('serial-status').className = 'status-dot disconnected';
+            document.getElementById('serial-text').textContent = 'Serial: Disconnected';
+        };
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>
