@@ -1,141 +1,174 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
-    <style>
-        .charts-row {
-            display: flex;
-            justify-content: space-around;
-            margin: 20px;
-        }
-        .chart-container {
-            width: 30%;
-            height: 300px;
-            border: 1px solid #ccc; /* Debug border */
-        }
-        canvas {
-            width: 100% !important;
-            height: 100% !important;
-        }
-    </style>
-</head>
-<body>
-    <div class="charts-row">
-        <div class="chart-container">
-            <canvas id="sensorChart1"></canvas>
-        </div>
-        <div class="chart-container">
-            <canvas id="sensorChart2"></canvas>
-        </div>
-        <div class="chart-container">
-            <canvas id="sensorChart3"></canvas>
-        </div>
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="charts-row">
+    <div class="chart-container">
+        <canvas id="accelChart"></canvas>
     </div>
+    <div class="chart-container">
+        <canvas id="gyroChart"></canvas>
+    </div>
+</div>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-    <script>
-        // Format time as HH:mm:ss
-        function formatTime(date) {
-            return date.toTimeString().split(' ')[0];
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script>
+    // Format time as HH:mm:ss
+    function formatTime(date) {
+        return date.toTimeString().split(' ')[0];
+    }
+
+    // Initialize chart
+    function initializeChart(canvasId, datasets, yAxisConfig) {
+        const ctx = document.getElementById(canvasId);
+        if (!ctx) {
+            console.error(`Canvas not found: ${canvasId}`);
+            return null;
         }
-
-        // Initialize chart
-        function initializeChart(canvasId, label, color) {
-            const ctx = document.getElementById(canvasId);
-            if (!ctx) {
-                console.error(`Canvas not found: ${canvasId}`);
-                return null;
-            }
-            console.log(`Initialized chart: ${canvasId}`);
-            return new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: [],
-                    datasets: [{
-                        label: label,
-                        data: [],
-                        borderColor: color,
-                        backgroundColor: color.replace('1)', '0.2)'),
-                        fill: true,
-                        tension: 0.4
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        x: {
-                            title: { display: true, text: 'Time (HH:mm:ss)', color: '#000' },
-                            ticks: { color: '#000' },
-                            grid: { color: '#ccc' }
-                        },
-                        y: {
-                            title: { display: true, text: label, color: '#000' },
-                            ticks: { color: '#000' },
-                            grid: { color: '#ccc' },
-                            suggestedMin: -2,
-                            suggestedMax: 2
-                        }
+        console.log(`Initialized chart: ${canvasId}`);
+        return new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: datasets
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: {
+                        ticks: { color: '#fff' },
+                        grid: { color: '#3c4958' }
                     },
-                    plugins: {
-                        legend: { display: true, labels: { color: '#000' } }
-                    }
+                    y: yAxisConfig
+                },
+                plugins: {
+                    legend: { display: true, labels: { color: '#fff' } }
                 }
+            }
+        });
+    }
+
+    // Initialize charts
+    const accelChart = initializeChart('accelChart', [
+        {
+            label: 'Accel X (g)',
+            data: [],
+            borderColor: 'rgb(119, 190, 240)',
+            backgroundColor: 'rgba(119, 190, 240, 0.2)',
+            fill: false,
+            tension: 0.4
+        },
+        {
+            label: 'Accel Y (g)',
+            data: [],
+            borderColor: 'rgb(74, 151, 130)',
+            backgroundColor: 'rgba(74, 151, 130, 0.2)',
+            fill: false,
+            tension: 0.4
+        },
+        {
+            label: 'Accel Z (g)',
+            data: [],
+            borderColor: 'rgb(255, 107, 107)',
+            backgroundColor: 'rgba(255, 107, 107, 0.2)',
+            fill: false,
+            tension: 0.4
+        }
+    ], {
+        type: 'linear',
+        position: 'left',
+        title: { display: true, text: 'Acceleration (g)', color: '#fff' },
+        ticks: { color: '#fff' },
+        grid: { color: '#3c4958' },
+        suggestedMin: -2,
+        suggestedMax: 2
+    });
+
+    const gyroChart = initializeChart('gyroChart', [
+        {
+            label: 'Gyro X (°/s)',
+            data: [],
+            borderColor: 'rgb(255, 215, 0)',
+            backgroundColor: 'rgba(255, 215, 0, 0.2)',
+            fill: false,
+            tension: 0.4
+        },
+        {
+            label: 'Gyro Y (°/s)',
+            data: [],
+            borderColor: 'rgb(153, 102, 255)',
+            backgroundColor: 'rgba(153, 102, 255, 0.2)',
+            fill: false,
+            tension: 0.4
+        },
+        {
+            label: 'Gyro Z (°/s)',
+            data: [],
+            borderColor: 'rgb(255, 159, 64)',
+            backgroundColor: 'rgba(255, 159, 64, 0.2)',
+            fill: false,
+            tension: 0.4
+        }
+    ], {
+        type: 'linear',
+        position: 'left',
+        title: { display: true, text: 'Gyroscope (°/s)', color: '#fff' },
+        ticks: { color: '#fff' },
+        grid: { color: '#3c4958' },
+        suggestedMin: -5,
+        suggestedMax: 5
+    });
+
+    // Update chart
+    function updateChart(chart, values, time) {
+        if (!chart) {
+            console.error('Chart not initialized');
+            return;
+        }
+        const valArray = values.map(v => parseFloat(v) || 0);
+        if (valArray.some(v => isNaN(v))) {
+            console.warn(`Invalid values: ${JSON.stringify(values)}`);
+        }
+
+        chart.data.labels.push(time || formatTime(new Date()));
+        chart.data.datasets.forEach((dataset, index) => {
+            dataset.data.push(valArray[index]);
+        });
+
+        if (chart.data.labels.length > 2000) {
+            chart.data.labels.shift();
+            chart.data.datasets.forEach(dataset => dataset.data.shift());
+        }
+
+        chart.update();
+        console.log(`Updated ${chart.canvas.id} with values: ${JSON.stringify(valArray)}`);
+    }
+
+    // Fetch sensor data
+    function fetchSensorData() {
+        fetch('http://10.0.0.110:5001/get-sensor-data')
+            .then(response => {
+                if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
+                return response.json();
+            })
+            .then(data => {
+                console.log('Received:', data);
+                const time = formatTime(new Date());
+                updateChart(accelChart, [data.accelX, data.accelY, data.accelZ], time);
+                updateChart(gyroChart, [data.gyroX, data.gyroY, data.gyroZ], time);
+            })
+            .catch(error => {
+                console.error('Fetch error:', error);
+                const time = formatTime(new Date());
+                updateChart(accelChart, [0, 0, 0], time);
+                updateChart(gyroChart, [0, 0, 0], time);
             });
-        }
+    }
 
-        // Initialize charts
-        const sensorChart1 = initializeChart('sensorChart1', 'Accel X (g)', 'rgb(119, 190, 240)');
-        const sensorChart2 = initializeChart('sensorChart2', 'Accel Y (g)', 'rgb(74, 151, 130)');
-        const sensorChart3 = initializeChart('sensorChart3', 'Accel Z (g)', 'rgb(255, 107, 107)');
-
-        // Update chart
-        function updateChart(chart, value, time) {
-            if (!chart) return;
-            const val = parseFloat(value);
-            if (isNaN(val)) {
-                console.warn(`Invalid value for chart: ${value}`);
-                return;
-            }
-            chart.data.labels.push(time || formatTime(new Date()));
-            chart.data.datasets[0].data.push(val);
-            if (chart.data.labels.length > 2000) {
-                chart.data.labels.shift();
-                chart.data.datasets[0].data.shift();
-            }
-            chart.update();
-            console.log(`Updated chart with value: ${val}`);
-        }
-
-        // Fetch sensor data
-        function fetchSensorData() {
-            fetch('http://10.0.0.110:5001/get-sensor-data') // Replace <server-ip>
-                .then(response => {
-                    if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
-                    return response.json();
-                })
-                .then(data => {
-                    console.log('Received:', data);
-                    const time = formatTime(new Date());
-                    if (data.accelX !== undefined) updateChart(sensorChart1, data.accelX, time);
-                    if (data.accelY !== undefined) updateChart(sensorChart2, data.accelY, time);
-                    if (data.accelZ !== undefined) updateChart(sensorChart3, data.accelZ, time);
-                })
-                .catch(error => {
-                    console.error('Fetch error:', error);
-                    // Fallback: Add zero values to keep charts moving
-                    const time = formatTime(new Date());
-                    updateChart(sensorChart1, 0, time);
-                    updateChart(sensorChart2, 0, time);
-                    updateChart(sensorChart3, 0, time);
-                });
-        }
-
-        // Fetch every 1 second
-        setInterval(fetchSensorData, 1000);
-        fetchSensorData();
-    </script>
-</body>
-</html>
+    // Fetch every 1 second
+    setInterval(fetchSensorData, 1000);
+    fetchSensorData();
+</script>
+{% endblock %}

@@ -1,8 +1,11 @@
 from flask import Flask, render_template, jsonify, request
 from flask_cors import CORS
+from esp32 import ESP32FlightController
 
 app = Flask(__name__)
 CORS(app)  # Enable CORS for browser fetch requests
+
+esp32FC = ESP32FlightController()
 
 # Store latest sensor data
 latest_sensor_data = {
@@ -40,7 +43,12 @@ def get_sensor_data():
 
 @app.route('/')
 def home():
+    esp32FC.read_esp32_data()
     return render_template('home.html')
+@app.route('/test')
+def test():
+    esp32FC.read_esp32_data()
+    return render_template('test.html')
 
 @app.route('/about')
 def about():

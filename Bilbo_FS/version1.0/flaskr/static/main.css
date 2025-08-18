@@ -6,12 +6,28 @@ body {
 }
 
 header {
-    background-color: #22384f;
+    /* background-color: #22384f; */
     color: white;
     padding: 10px 20px;
     text-align: center;
 }
 
+.button {
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+.testing-btn {background-color: #4ad4a1;} /* Green */
+
+h2 {
+    color: white;
+}
 nav a {
     color: white;
     text-decoration: none;
@@ -43,12 +59,11 @@ nav a:hover {
 }
 
 .chart-container {
-    background-color: #22384f;
+    /* background-color: #22384f; */
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(64, 72, 98, 0.842);
+    /* box-shadow: 0 4px 8px rgba(64, 72, 98, 0.842); */
     padding: 20px;
-    width: 33%; /* Equal width for three charts */
-    max-width: 400px; /* Cap size */
+    width: 40%; /* Equal width for three charts */
     box-sizing: border-box;
     overflow: hidden;
 }
@@ -59,6 +74,21 @@ canvas {
     max-width: 100%;
 }
 
+
+.charts-row {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px;
+}
+/* .chart-container {
+    width: 30%;
+    height: 300px;
+    border: 1px solid #ccc; 
+}
+canvas {
+    width: 100% !important;
+    height: 100% !important;
+} */
 footer {
     /* background-color: #333; */
     color: white;
@@ -70,20 +100,20 @@ footer {
 
 @media (max-width: 1200px) {
     .chart-container {
-        width: 32%;
-        max-width: 350px;
+        width: 40%;
+        max-width: 550px;
     }
     canvas {
-        height: 400px !important;
+        height: 500px !important;
     }
 }
 
 @media (max-width: 800px) {
     .chart-container {
-        width: 30%;
-        max-width: 300px;
+        width: 40%;
+        max-width: 450px;
     }
     canvas {
-        height: 350px !important;
+        height: 450px !important;
     }
 }
