@@ -1,51 +1,19 @@
-import serial
-import serial.tools.list_ports
 import time
+from data.serial_comm import SerialCommunication
 
-ports = serial.tools.list_ports.comports()
-for port in ports:
-    print(f"Found port: {port.device} - {port.description}")
 
-# Check if the intended port exists
-if "COM5" not in [port.device for port in ports]:
-    print("Error: COM5 not found. Check the connection.")
+serial_comm = SerialCommunication()
+serial_open = serial_comm.open_serial_connection()
+
 
 class ESP32FlightController:
     # Initialize parameters
-    def __init__(self, serial_port="COM5", baudrate=115200):
-        self.serial_port = serial_port
-        self.baudrate = baudrate
-        self.serial_connection = None  # Initialize to None
-        self.is_serial_connected = False  # Track connection status
+    def __init__(self):
+        pass
 
-    def open_serial_connection(self):
-        try:
-            self.serial_connection = serial.Serial(self.serial_port, self.baudrate, timeout=1)
-            time.sleep(2)  # Allow ESP32 time to reset
-            self.is_serial_connected = True
-            print(f"Serial connection established at {self.serial_port}")
-        except serial.SerialException as e:
-            print(f"Error opening serial port: {e}")
-            self.is_serial_connected = False
-    
     def read_esp32_data(self):
-        try:
-            raw_line = self.serial_connection.readline()
-            if raw_line:
-                try:
-                    line = raw_line.decode('utf-8').strip()
-                    print(f"Raw line: {line}")
-                except UnicodeDecodeError:
-                    print(f"Invalid UTF-8 data skipped: {raw_line}")
-                    return
-                
-        except Exception as e:
-            print(f"Error in read_esp32_data: {e}")
-
-    def close_connection(self):
-        # Close the serial connection
-        if self.serial_connection:
-            self.serial_connection.close()
-            self.serial_connection = None  # Reset connection
-            self.is_serial_connected = False  # Mark connection as closed
-            print("Serial connection closed.")
+        while True:
+            if serial_open.in_waiting > 0: # Check if there is data in the buffer
+                line = serial_open.readline().decode('utf-8').strip()
+                print(f"Received: {line}")
+            time.sleep(0.1) # Small delay to prevent busy-waiting

@@ -45,6 +45,7 @@ def get_sensor_data():
 def home():
     esp32FC.read_esp32_data()
     return render_template('home.html')
+
 @app.route('/test')
 def test():
     esp32FC.read_esp32_data()
