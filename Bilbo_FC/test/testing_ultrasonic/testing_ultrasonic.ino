@@ -8,6 +8,7 @@
 
 #define PIN_ECHO    (4)  //D4
 #define PIN_TRIGGER (2)  //D2
+#define LED_GREEN   (X)   //DX
 
 float duration, distance;
 
@@ -16,6 +17,7 @@ void setup() {
   Serial.println("Initializing ultrasonic test");
   pinMode(PIN_TRIGGER, OUTPUT);
   pinMode(PIN_ECHO, INPUT);
+  pinMode(LED_GREEN, OUTPUT);
 }
 
 void loop() {
@@ -31,4 +33,12 @@ void loop() {
   Serial.print("Distance: ");
   Serial.println(distance);
   delay(300);
+  if(distance <= 30)
+  {
+    digitalWrite(LED_GREEN, HIGH);
+  }
+  else
+  {
+    digitalWrite(LED_GREEN, LOW);
+  }
 }
