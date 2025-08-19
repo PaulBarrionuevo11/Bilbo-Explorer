@@ -8,9 +8,10 @@
 
 #define PIN_ECHO    (4)  //D4
 #define PIN_TRIGGER (2)  //D2
-#define LED_GREEN   (X)   //DX
+#define LED_GREEN   (X)  //DX
+#define PIN_BATTERY (A0)
 
-float duration, distance;
+float duration, distance, battery;
 
 void setup() {
   Serial.begin(115200);
@@ -18,6 +19,7 @@ void setup() {
   pinMode(PIN_TRIGGER, OUTPUT);
   pinMode(PIN_ECHO, INPUT);
   pinMode(LED_GREEN, OUTPUT);
+  pinMode(PIN_BATTERY, INPUT);
 }
 
 void loop() {
@@ -27,7 +29,11 @@ void loop() {
   digitalWrite(PIN_TRIGGER, HIGH);
   delayMicroseconds(10);
   digitalWrite(PIN_TRIGGER, LOW);
+  battery = analogRead(PIN_BATTERY);
 
+  Serial.print("Battery level is: ");
+  Serial.println(battery);
+  
   duration = pulseIn(PIN_ECHO, HIGH);
   distance = (duration*.0343)/2;
   Serial.print("Distance: ");
