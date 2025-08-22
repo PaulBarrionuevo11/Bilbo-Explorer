@@ -14,7 +14,7 @@ Bilbo is an innovative, curious quadcopter designed to explore the aerial spaces
   - [Firmware](#firmware)
   - [Control Software](#control-software)
 - [Testing](#testing)
-  - HC-SR04: Ultrasonic sensor
+  - [Ultrasonic sensor](#ultrasonic-sensor)
 
 
 # Introduction
@@ -61,7 +61,7 @@ A combination of C and C++ is used for the drone flight controller as well as fl
 The control software is called Shire. Written in Python and run in a localhost
 
 # Testing
-## HC-SR04: Ultrasonic sensor
+## Ultrasonic sensor
 The objective is to validate the sensor accuracy by having a fixture to place the HC-SR04 sensor connected to an ESP32 and have it at a distance of aprox 30cm. Accuracy goes from 29.7 up to 3.3.
 Circuit Diagram
 Source code here
