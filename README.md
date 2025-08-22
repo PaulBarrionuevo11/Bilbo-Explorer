@@ -13,20 +13,8 @@ Bilbo is an innovative, curious quadcopter designed to explore the aerial spaces
 - [Software](#software)
   - [Firmware](#firmware)
   - [Control Software](#control-software)
-- [Usage](#usage)
-  - [Flight Modes](#flight-modes)
-  - [Safety Guidelines](#safety-guidelines)
-- [Development](#development)
-  - [Contributing](#contributing)
-  - [Debugging and Troubleshooting](#debugging-and-troubleshooting)
-- [Community](#community)
-  - [Discussion Forums](#discussion-forums)
-  - [Contributors](#contributors)
-- [Documentation](#documentation)
-  - [API Reference](#api-reference)
-  - [Tutorials](#tutorials)
-- [License](#license)
-- [Acknowledgments](#acknowledgments)
+- [Testing](#testing)
+  - HC-SR04: Ultrasonic sensor
 
 
 # Introduction
@@ -58,9 +46,22 @@ The electonic components used in this project are (as of now) the following:
 * MPU 6050: IMU
 * BMP280: Barometric Pressure & Altitude Sensor
 * HC-SR04: Ultrasonic sensor
-* Brushless motors (x2)
+* Brushless motors (x2)\
 * ESC (x2)
 * Lipo Battery or Power Supply (Recommend lipo battery to use for outdoor flights)
+* LEDs
+* Voltage Regulator
+* Capacitors
+* Resistors
 
-## PID STATION
-The PID station will be controlled with the Flight Server (FS) containe in this repo. The intention is to read values from the sensors and start two motors remotely to stabilize the the front part of the vehicle and obtained the values for calibration.
+# Software
+## Firmware
+A combination of C and C++ is used for the drone flight controller as well as flight commands
+## Control software
+The control software is called Shire. Written in Python and run in a localhost
+
+# Testing
+## HC-SR04: Ultrasonic sensor
+The objective is to validate the sensor accuracy by having a fixture to place the HC-SR04 sensor connected to an ESP32 and have it at a distance of aprox 30cm. Accuracy goes from 29.7 up to 3.3.
+Circuit Diagram
+Source code here
