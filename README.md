@@ -1,5 +1,5 @@
 # Bilbo explorer
-Bilbo is an innovative, curious quadcopter designed to explore the aerial spaces of mars, embracing adventure as it learns and grows.
+Bilbo is an innovative, curious quadcopter designed to explore the aerial spaces of the earth, embracing adventure as it learns and grows.
 
 ## Table of Contents
 - [Introduction](#introduction)
